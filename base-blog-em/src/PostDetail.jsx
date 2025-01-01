@@ -3,7 +3,21 @@ import "./PostDetail.css";
 
 export function PostDetail({ post }) {
   // replace with useQuery
-  const data = [];
+  const { data, isError, error, isLoading } = useQuery("comments", () => fetchComments(post.id), {
+    staleTime: 2000,
+  });
+
+  // TODO DRY
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>
+      <p>Error happened!</p>
+      <p>{error.toString()}</p>
+    </div>;
+  }
 
   return (
     <>
